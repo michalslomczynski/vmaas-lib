@@ -303,12 +303,15 @@ func (ms *ModuleStream) Scan(value interface{}) error {
 
 	// Split the string into module and stream parts
 	parts := strings.Split(strValue, ":")
-	if len(parts) != 2 {
-		return fmt.Errorf("invalid format for ModuleStream: %s", strValue)
+	if len(parts) == 2 {
+		ms.Module = parts[0]
+		ms.Stream = parts[1]
+		return nil
 	}
 
+	// Skip missing stream part
 	ms.Module = parts[0]
-	ms.Stream = parts[1]
+	ms.Stream = ""
 
 	return nil
 }
